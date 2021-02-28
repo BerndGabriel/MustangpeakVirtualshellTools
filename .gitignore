@@ -1,51 +1,49 @@
-**.dcu
-**.bmp
-**.d
-**.ddp
-**.drc
-**.gex
-**.ico
-**.ICO
-**.identcache
-**.log
-**.map
-**.o
-**.ncb
-**.sln
-**.suo
-**.dproj*
-**.vcproj*
-**.cbproj*
-**.exe
-**CVS
-**__history
-**.*ignore
-**.svn
-*.*~*
-**.bak
-**.cfg
-**.dof
-**.mes
-**.dsk
-**.lpi
-**.*groupproj*
-**.tvsconfig
-**.local
-**.stat
-**.gid
-**.lpi
-**.res
-**.otares
-**.aqt
-*bin
-sonar-*
-config.default
-Thumbs.db
-Demos/Main Demos/bin
-Demos/Main Demos/lib
-Demos/Other Demos/*/bin
-Demos/Other Demos/*/lib
-Demos/Other Demos/*/cache
-package/lib
-package/XE2BCB
-*eay*.dll
+# Compiled source #
+###################
+*.dcu
+*.obj
+*.exe
+*.bpl
+*.bpi
+*.dcp
+*.rsm
+*.stat
+*.map
+*.lib
+
+# Generated source #
+###################
+*.hpp
+
+# Backup files    #
+###################
+*.~*
+*.bak
+*.#00
+*.pch
+*.Patch
+/__history
+
+# IDE Files	  #
+###################
+*.dproj.local
+*.groupproj.local
+*.identcache
+*.dsk
+*.tvsconfig
+*.otares
+*.drc
+*.rc
+*.res
+*.local
+
+# Output Folders  #
+###################
+/Win32
+/Win64
+/OSX32
+
+#    C++ Files    #
+###################
+*.prjmgc
+

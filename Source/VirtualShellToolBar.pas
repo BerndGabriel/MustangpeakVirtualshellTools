@@ -24,7 +24,7 @@ interface
 {$include ..\Include\AddIns.inc}
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, 
+  Windows, Messages, SysUtils, Classes, Graphics, Controls,
   Buttons, ShellAPI, CommCtrl, ShlObj, ActiveX,
   Imglist, VirtualExplorerTree, ToolWin, MPDataObject,
   MPShellTypes, MPShellUtilities, VirtualResources, MPCommonObjects,
@@ -210,7 +210,7 @@ type
   // Basic Toolbutton that can be created an placed on a TVirtualToolbar
   TCustomWideSpeedButton = class(TGraphicControl, IDropSource)
   private
-    FCaption: WideString;             // The caption to be displayed
+    FCaption: string;             // The caption to be displayed
     FImageIndex: integer;             // Index of the image in the Toolbar's ImageList
     FPaintState: TButtonPaintState;   // Flags to determine how the button is painted
     FSpacing: integer;
@@ -234,13 +234,13 @@ type
     FOLEDraggable: Boolean;
 
     function GetBottom: integer;
-    function GetCaption: WideString; virtual;
+    function GetCaption: string; virtual;
     function GetImageIndex: integer; virtual;
     function GetImageList: TCustomImageList;
     function GetRight: integer;
     function GetThemeToolbar: HTheme;
     procedure ReadCaption(Reader: TReader);
-    procedure SetCaption(const Value: WideString);
+    procedure SetCaption(const Value: string);
     procedure SetFlat(const Value: Boolean);
     procedure SetImageIndex(const Value: integer);
     procedure SetImageList(const Value: TCustomImageList);
@@ -255,7 +255,7 @@ type
   protected
     procedure ActionChange(Sender: TObject; CheckDefaults: Boolean); override;
     procedure CalcButtonLayout(DC: HDC; const Client: TRect; const AnOffset: TPoint;
-      const Caption: WideString; Layout: TButtonLayout; Margin, Spacing: Integer;
+      const Caption: string; Layout: TButtonLayout; Margin, Spacing: Integer;
       var GlyphPos: TPoint; var TextBounds: TRect; BiDiFlags: Integer);
     function CanAutoSize(var NewWidth, NewHeight: Integer): Boolean; override;
     procedure DoDblClk; virtual;
@@ -264,7 +264,7 @@ type
     function DragEnter(const dataObj: IDataObject; grfKeyState: Longint; pt: TPoint; var dwEffect: Longint): HResult; virtual;
     function DragOverOLE(grfKeyState: Longint; pt: TPoint; var dwEffect: Longint): HResult; virtual;
     function DragLeave: HResult; virtual;
-    procedure DrawButtonText(DC: HDC; const Caption: WideString; TextBounds: TRect;
+    procedure DrawButtonText(DC: HDC; const Caption: string; TextBounds: TRect;
       Enabled: Boolean; BiDiFlags: Longint);
     function Drop(const dataObj: IDataObject; grfKeyState: Longint; pt: TPoint; var dwEffect: Longint): HResult; virtual;
     procedure FontChange(Sender: TObject);
@@ -292,7 +292,7 @@ type
     procedure WMMouseMove(var Message: TWMMouseMove); message WM_MOUSEMOVE;
     procedure WMThemeChanged(var Message: TMessage); message WM_THEMECHANGED;
 
-    property Caption: WideString read GetCaption write SetCaption stored False; // Stored in DefineProperties
+    property Caption: string read GetCaption write SetCaption stored False; // Stored in DefineProperties
     property Flat: Boolean read FFlat write SetFlat default False;
     property HotAnimate: Boolean read FHotAnimate write FHotAnimate default False;
     property ImageIndex: integer read GetImageIndex write SetImageIndex default -1;
@@ -383,7 +383,7 @@ type
   private
     FNamespace: TNamespace;
     FCaptionOptions: TCaptionOptions;
-    function GetCaption: WideString; override;
+    function GetCaption: string; override;
     function GetImageIndex: integer; override;
     procedure SetCaptionOptions(const Value: TCaptionOptions);
 
@@ -406,7 +406,7 @@ type
 
     property Action;
     property AutoSize;
-    property Caption: WideString read GetCaption;
+    property Caption: string read GetCaption;
     property CaptionOptions: TCaptionOptions read FCaptionOptions write SetCaptionOptions default [];
     property Color;
     property Constraints;
@@ -471,7 +471,7 @@ type
     function GetEdgeBorders: TEdgeBorders;
     function GetEdgeInner: TEdgeStyle;
     function GetEdgeOuter: TEdgeStyle;
-    function GetWideCaption: WideString;
+    function GetWideCaption: string;
     procedure ReadCaption(Reader: TReader);
     procedure SetAlign(const Value: TAlign);
     procedure SetBkGndParent(const Value: TWinControl);
@@ -479,7 +479,7 @@ type
     procedure SetEdgeOuter(const Value: TEdgeStyle);
     procedure SetEdgeInner(const Value: TEdgeStyle);
     procedure SetOptions(const Value: TVirtualToolbarOptions);
-    procedure SetWideCaption(const Value: WideString);
+    procedure SetWideCaption(const Value: string);
     procedure WriteCaption(Writer: TWriter);
     function GetViewportBounds: TRect;
     procedure SetButtonLayout(const Value: TButtonLayout);
@@ -544,7 +544,7 @@ type
     property ButtonLayout: TButtonLayout read FButtonLayout write SetButtonLayout default blGlyphLeft;
     property ButtonMargin: integer read FButtonMargin write SetButtonMargin default -1;
     property ButtonSpacing: integer read FButtonSpacing write SetButtonSpacing default 4;
-    property Caption: WideString read GetWideCaption write SetWideCaption stored False; // Never let VCL store Widestring, done in DefineProperites
+    property Caption: string read GetWideCaption write SetWideCaption stored False; // Never let VCL store string, done in DefineProperites
     property CaptionButton: TCaptionButton read FCaptionButton write FCaptionButton;
     property ChangeNotifierEnabled: Boolean read FChangeNotifierEnabled write SetChangeNotiferEnabled;
     property Content: TShellToolbarContents read FContent write FContent default [stcFolders, stcFiles, stcPrograms];
@@ -571,12 +571,12 @@ type
 
     procedure BeginUpdate;
     procedure EndUpdate;
-    procedure LoadFromFile(FileName: WideString); virtual;
+    procedure LoadFromFile(FileName: string); virtual;
     procedure LoadFromStream(S: TStream); virtual;
     procedure Loaded; override;
     procedure RebuildToolbar;
     procedure RecreateToolbar;
-    procedure SaveToFile(FileName: WideString); virtual;
+    procedure SaveToFile(FileName: string); virtual;
     procedure SaveToStream(S: TStream); virtual;
 
     property ButtonList: TVirtualButtonList read FButtonList;
@@ -639,7 +639,7 @@ type
   {$IFDEF EXPLORERCOMBOBOX_L}
     property VirtualExplorerComboBox: TCustomVirtualExplorerComboBox read FVirtualExplorerComboBox
       write SetVirtualExplorerComboBox;
-  {$ENDIF}  
+  {$ENDIF}
   {$IFDEF EXPLORERTREE_L}
     property VirtualExplorerTree: TCustomVirtualExplorerTree read FVirtualExplorerTree
       write SetVirtualExplorerTree;
@@ -868,14 +868,13 @@ begin
 end;
 
 procedure TCustomWideSpeedButton.CalcButtonLayout(DC: HDC; const Client: TRect;
-  const AnOffset: TPoint; const Caption: WideString; Layout: TButtonLayout;
+  const AnOffset: TPoint; const Caption: string; Layout: TButtonLayout;
   Margin, Spacing: Integer; var GlyphPos: TPoint; var TextBounds: TRect;
   BiDiFlags: Integer);
 var
   TextPos: TPoint;
   ClientSize, GlyphSize, TextSize: TPoint;
   TotalSize: TPoint;
-  CaptionANSI: AnsiString;
 begin
   if (BiDiFlags and DT_RIGHT) = DT_RIGHT then
   begin
@@ -899,14 +898,8 @@ begin
   if Length(Caption) > 0 then
   begin
     TextBounds := Rect(0, 0, Client.Right - Client.Left, 0);
-    if IsUnicode then
-      DrawTextW_MP(DC, PWideChar(Caption), Length(Caption), TextBounds,
-        DT_CALCRECT or BiDiFlags)
-    else begin
-      CaptionANSI := AnsiString(Caption);
-      DrawTextA(DC, PAnsiChar(CaptionANSI), Length(CaptionANSI), TextBounds,
-        DT_CALCRECT or BiDiFlags)
-    end;
+    DrawText(DC, PWideChar(Caption), Length(Caption), TextBounds,
+      DT_CALCRECT or BiDiFlags);
     TextSize := Point(TextBounds.Right - TextBounds.Left, TextBounds.Bottom -
       TextBounds.Top);
   end
@@ -1108,7 +1101,7 @@ end;
 
 procedure TCustomWideSpeedButton.DefineProperties(Filer: TFiler);
 
-// Defines the WideString as a custom property with the custom name WideText.
+// Defines the string as a custom property with the custom name WideText.
 // Acorrding to Mike Lischke the VCL streaming screws up streaming of WideStrings
 
 begin
@@ -1166,43 +1159,24 @@ begin
   Result := S_OK;
 end;
 
-procedure TCustomWideSpeedButton.DrawButtonText(DC: HDC; const Caption: WideString;
+procedure TCustomWideSpeedButton.DrawButtonText(DC: HDC; const Caption: string;
   TextBounds: TRect; Enabled: Boolean; BiDiFlags: Integer);
 var
-  CaptionANSI: AnsiString;
   OldColor, Flags, OldMode: Longword;
 begin
-  Flags := 0;
   OldMode := SetBkMode(DC, Windows.TRANSPARENT);
-  if IsUnicode then
+  Flags := {DT_CENTER or }DT_VCENTER or BiDiFlags;
+  if not Enabled then
   begin
-    Flags := {DT_CENTER or }DT_VCENTER or BiDiFlags;
-    if not Enabled then
-    begin
-      OffsetRect(TextBounds, 1, 1);
-      OldColor := SetTextColor(DC, ColorToRGB(clBtnHighlight));
-      DrawTextW_MP(DC, PWideChar(Caption), Length(Caption), TextBounds, Flags);
-      OffsetRect(TextBounds, -1, -1);
-      SetTextColor(DC, ColorToRGB(clBtnShadow));
-      DrawTextW_MP(DC, PWideChar(Caption), Length(Caption), TextBounds, Flags);
-      SetTextColor(DC, ColorToRGB(OldColor));
-    end else
-      DrawTextW_MP(DC, PWideChar(Caption), Length(Caption), TextBounds, Flags);
+    OffsetRect(TextBounds, 1, 1);
+    OldColor := SetTextColor(DC, ColorToRGB(clBtnHighlight));
+    DrawText(DC, PWideChar(Caption), Length(Caption), TextBounds, Flags);
+    OffsetRect(TextBounds, -1, -1);
+    SetTextColor(DC, ColorToRGB(clBtnShadow));
+    DrawText(DC, PWideChar(Caption), Length(Caption), TextBounds, Flags);
+    SetTextColor(DC, ColorToRGB(OldColor));
   end else
-  begin
-    CaptionANSI := AnsiString(Caption);
-    if not Enabled then
-    begin
-      OffsetRect(TextBounds, 1, 1);
-      OldColor := SetTextColor(DC, ColorToRGB(clBtnHighlight));
-      DrawText(DC, Caption, Length(Caption), TextBounds, Flags);
-      OffsetRect(TextBounds, -1, -1);
-      SetTextColor(DC, ColorToRGB(clBtnShadow));
-      DrawTextA(DC, PAnsiChar(CaptionANSI), Length(Caption), TextBounds, Flags);
-      SetTextColor(DC, ColorToRGB(OldColor));
-    end else
-      DrawTextA(DC, PAnsiChar(CaptionANSI), Length(Caption), TextBounds, Flags);
-  end;
+    DrawText(DC, PWideChar(Caption), Length(Caption), TextBounds, Flags);
   SetBkMode(DC, OldMode);
 end;
 
@@ -1238,7 +1212,7 @@ begin
   Result := Top + Height
 end;
 
-function TCustomWideSpeedButton.GetCaption: WideString;
+function TCustomWideSpeedButton.GetCaption: string;
 begin
   Result := FCaption;
 end;
@@ -1545,7 +1519,7 @@ begin
   SetBounds(Rect.Left, Rect.Top, Rect.Right - Rect.Left, Rect.Bottom - Rect.Top)
 end;
 
-procedure TCustomWideSpeedButton.SetCaption(const Value: WideString);
+procedure TCustomWideSpeedButton.SetCaption(const Value: string);
 begin
   if FCaption <> Value then
   begin
@@ -2323,7 +2297,7 @@ begin
     Exclude(FStates, tsDragInLaunchZone);
     FDragDropDataObj := nil;  // decrease its ref count
     FDropTarget := nil;
-    DrawDropMarker(@Pt, False);  
+    DrawDropMarker(@Pt, False);
     DoCreateButtons
   end
 end;
@@ -2429,7 +2403,7 @@ begin
   end;
 end;
 
-function TCustomVirtualToolbar.GetWideCaption: WideString;
+function TCustomVirtualToolbar.GetWideCaption: string;
 begin
   Result := CaptionButton.Caption
 end;
@@ -2439,7 +2413,7 @@ begin
   inherited;
 end;
 
-procedure TCustomVirtualToolbar.LoadFromFile(FileName: WideString);
+procedure TCustomVirtualToolbar.LoadFromFile(FileName: string);
 var
   F: TVirtualFileStream;
 begin
@@ -2480,7 +2454,7 @@ var
   i: integer;
   NS: TNamespace;
   IsFolder, IsFile, IsExe: Boolean;
-  Ext: WideString;
+  Ext: string;
 begin
   Result := False;
   ShellIDList := TCommonShellIDList.Create;
@@ -2499,7 +2473,7 @@ begin
               IsFolder := NS.Folder;
               IsFile := not NS.Folder;
               Ext := WideExtractFileExt(NS.NameParseAddress);
-              Ext := WideLowerCase( PWideChar(Ext));
+              Ext := SysUtils.AnsiLowerCase(Ext);
               IsExe := (Ext = '.exe') or (Ext = '.bat') or (Ext = '.com');
               if Content = [stcFolders, stcPrograms] then
                 Result := IsFolder or IsExe
@@ -2576,7 +2550,7 @@ begin
   end
 end;
 
-procedure TCustomVirtualToolbar.SaveToFile(FileName: WideString);
+procedure TCustomVirtualToolbar.SaveToFile(FileName: string);
 var
   F: TVirtualFileStream;
 begin
@@ -2690,7 +2664,7 @@ procedure TCustomVirtualToolbar.SetName(const Value: TComponentName);
 var
   ChangeText: Boolean;
 begin
-  // Do it just like TControl but I have created a new Caption (widestring) so I
+  // Do it just like TControl but I have created a new Caption (string) so I
   // have to duplicate it.
   ChangeText := (csSetCaption in ControlStyle) and
     not (csLoading in ComponentState) and (Caption = Text) and
@@ -2724,7 +2698,7 @@ begin
         SetWindowOrgEx(BackBits.Canvas.Handle, Pt.X, Pt.Y, @Pt);
       end
     end;
-    
+
     BitBlt(DC, 0, 0, Width, Height, BackBits.Canvas.Handle, 0, 0, SRCCOPY);
   end
 end;
@@ -2791,7 +2765,7 @@ var
   OldOptions: TVirtualToolbarOptions;
   i: integer;
   ImageList: TCustomImageList;
-  
+
 begin
   if FOptions <> Value then
   begin
@@ -2841,7 +2815,7 @@ begin
       if toThreadedImages in Value then
         ThreadedImagesEnabled := True
       else
-        ThreadedImagesEnabled := False;                     
+        ThreadedImagesEnabled := False;
     end;
 
     if BitChanged(Value, OldOptions, toLargeButtons) then
@@ -2858,7 +2832,7 @@ begin
   end;
 end;
 
-procedure TCustomVirtualToolbar.SetWideCaption(const Value: WideString);
+procedure TCustomVirtualToolbar.SetWideCaption(const Value: string);
 begin
   CaptionButton.Caption := Value;
   RebuildToolbar;
@@ -3563,15 +3537,10 @@ begin
       OldMode := SetBkMode(DC, Windows.TRANSPARENT);
       InflateRect(TextBounds, -2, -2);
       dwTextFlags1 := DT_CENTER or DT_SINGLELINE or DT_VCENTER;
-      if IsUnicode then
-        DrawTextW_MP(DC, PWideChar(Caption), Length(Caption), TextBounds,
-          dwTextFlags1 or BiDiFlags)
-      else begin
-        DrawText(DC, Caption, Length(Caption), TextBounds,
-          dwTextFlags1 or BiDiFlags)
-      end;
-      SetBkMode(DC, OldMode)
-    end
+      DrawText(DC, PWideChar(Caption), Length(Caption), TextBounds,
+        dwTextFlags1 or BiDiFlags);
+      SetBkMode(DC, OldMode);
+    end;
   end
 end;
 
@@ -3713,7 +3682,7 @@ begin
   AddToUpdateRgn;
   Update;
   if Assigned(Namespace) then
-    if {$IFDEF EXPLORERTREE_L}Assigned((Parent as TCustomVirtualShellToolbar).VirtualExplorerTree){$ELSE}False{$ENDIF} 
+    if {$IFDEF EXPLORERTREE_L}Assigned((Parent as TCustomVirtualShellToolbar).VirtualExplorerTree){$ELSE}False{$ENDIF}
        and Namespace.Folder then
       (Parent as TCustomVirtualShellToolbar).ChangeLinkDispatch(Namespace.AbsolutePIDL)
     else
@@ -3774,7 +3743,7 @@ begin
     Result := S_OK
 end;
 
-function TShellToolButton.GetCaption: WideString;
+function TShellToolButton.GetCaption: string;
 
 // Overrides the Caption property getter to automaticlly retrieve the name of the
 // Shell Object from the Namespace property.  To refresh the Caption set it to an
