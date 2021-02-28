@@ -819,6 +819,15 @@ implementation
 uses
   System.Types, ActnList, Forms, VirtualShellNotifier;
 
+type
+  TVSTSTSeekNewPos =
+{$if not Defined(FPC) and (CompilerVersion >= 29)}
+    UInt64;
+{$else}
+    Int64;
+{$ifend}
+
+
 function RectWidth(ARect: TRect): integer;
 begin
   Result := ARect.Right - ARect.Left
@@ -4341,7 +4350,7 @@ var
   StgMedium: TStgMedium;
   Stream: IStream;
   BytesRead: LongInt;
-  NewPos: uint64;
+  NewPos: TVSTSTSeekNewPos;
   LocalPIDLSize: integer;
   Malloc: IMalloc;
 begin
@@ -4365,7 +4374,7 @@ var
   StgMedium: TStgMedium;
   hMem: THandle;
   Stream: IStream;
-  NewPos: uint64;
+  NewPos: TVSTSTSeekNewPos;
   Int: integer;
   BytesWritten: LongInt;
 begin
